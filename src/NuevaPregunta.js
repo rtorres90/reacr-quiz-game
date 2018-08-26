@@ -9,15 +9,17 @@ class NuevaPregunta extends React.Component {
 
     render() {
         let manejarCambiosOpcion = this.props.manejarCambiosOpcion;
+        let manejarOpcionCorrecta = this.props.manejarOpcionCorrecta;
         let indicePregunta = this.props.pregunta.index;
         let namesList = this.props.pregunta.opciones.map((opcion) => {
             return <li key={opcion.index}>
                 <input type="text" name={opcion.index} id={opcion.index}
                     value={opcion.name}
                     onChange={manejarCambiosOpcion} />
-                <input type="radio" name={indicePregunta} id={opcion.index}/>
+                <input type="radio" name={indicePregunta} id={opcion.index}
+                    onClick={manejarOpcionCorrecta} />
             </li>;
-        })
+        });
 
         return (
             <div>

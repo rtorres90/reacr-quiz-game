@@ -17,6 +17,7 @@ class Juego extends React.Component {
         this.grabarPregunta = this.grabarPregunta.bind(this);
         this.nuevaOpcion = this.nuevaOpcion.bind(this);
         this.manejarCambiosOpcion = this.manejarCambiosOpcion.bind(this);
+        this.manejarOpcionCorrecta = this.manejarOpcionCorrecta.bind(this);
 
     }
 
@@ -53,6 +54,14 @@ class Juego extends React.Component {
         });
     }
 
+    manejarOpcionCorrecta(event) {
+        let preguntaActual = this.state.preguntaActual;
+        preguntaActual.opcionCorrecta = parseInt(event.target.id);
+        this.setState({
+            'preguntaActual': preguntaActual
+        });
+    }
+
     nuevaOpcion() {
         let preguntaActual = this.state.preguntaActual;
         let nuevoIndice = preguntaActual.opciones.length;
@@ -64,18 +73,30 @@ class Juego extends React.Component {
 
 
     render() {
+        let namesList = this.state.preguntas.map((pregunta) => {
+            return (
+                <li key={pregunta.index}>
+                    {pregunta.pregunta}
+                </li>
+            );
+        })
         return (
             <div>
                 <Button bsStyle='primary' onClick={() => this.nuevaPregunta()}>Añadir Pregunta</Button>
-                <div>
+                <Row>
                     {this.state.mostrarPregunta &&
                         <NuevaPregunta pregunta={this.state.preguntaActual}
                             grabarPregunta={this.grabarPregunta}
                             manejarCambios={this.manejarCambios}
                             nuevaOpcion={this.nuevaOpcion}
-                            manejarCambiosOpcion={this.manejarCambiosOpcion}>
+                            manejarCambiosOpcion={this.manejarCambiosOpcion}
+                            manejarOpcionCorrecta={this.manejarOpcionCorrecta}>
                         </NuevaPregunta>}
-                </div>
+                </Row>
+                <Row>
+                    {this.state.preguntas.length > 0 &&
+                        <ul>{namesList}</ul>}
+                </Row>
             </div>
         );
     }
